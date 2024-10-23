@@ -1,0 +1,16 @@
+{
+  "transcription_prompt": "以下の音声ファイルを文字起こししてください。以下の点に注意してください：\n    1. 日本語で出力してください。\n    2. 時間表記（例：13:05）は削除してください。\n    3. 相槌（例：はい、うん、ええ）や言い淀み（例：あの、えーと）は削除してください。\n    4. 文脈を損なわない範囲で、できるだけ簡潔に文字起こしを行ってください。\n    5. 話者の区別は不要です",
+  "output_directory": "",
+  "gemini_api_keys": {
+    "GEMINI_API_KEY_1": "",
+    "GEMINI_API_KEY_2": "",
+    "GEMINI_API_KEY_3": "",
+    "GEMINI_API_KEY_4": "",
+    "GEMINI_API_KEY_5": "",
+    "GEMINI_API_KEY_6": "",
+    "GEMINI_API_KEY_7": "",
+    "GEMINI_API_KEY_8": "",
+    "GEMINI_API_KEY_9": "",
+    "GEMINI_API_KEY_10": ""
+  }
+}
