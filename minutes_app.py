@@ -20,6 +20,7 @@ from docx import Document
 import datetime
 import xml.parsers.expat
 import webbrowser
+from dateutil import parser
 
 # ユーザーディレクトリのDocumentsフォルダのパスを取得
 documents_path = Path.home() / "Documents"
@@ -426,7 +427,7 @@ def create_excel(extracted_info, output_file):
             elif cell.column == 2:  # B列（内容）のセルの場合
                 cell.alignment = Alignment(wrap_text=True)  # テキストを折り返して表示
 
-    # B列の幅を内容に合わせて自動調��します
+    # B列の幅を内容に合わせて自動調します
     for column_cells in ws.columns:
         length = max(len(str(cell.value)) for cell in column_cells)
         if column_cells[0].column_letter == 'B':
@@ -568,7 +569,13 @@ def extract_info_from_xlsx(file_path):
 def convert_excel_date(value):
     if isinstance(value, (int, float)):
         return from_excel(value).strftime('%Y-%m-%d')
-    return value
+    try:
+        # 文字列として日付を解析
+        parsed_date = parser.parse(str(value))
+        return parsed_date.strftime('%Y-%m-%d')
+    except (ValueError, TypeError) as e:
+        logging.error(f"日付の解析に失敗しました: {value} - {str(e)}")
+        return value
 
 def create_minutes_from_template(data, template_path):
     # 修正後
@@ -969,6 +976,7 @@ def process_audio_file_async(audio_file, processed_files, start_time):
     # プロンプトが空でないか確認
     if not transcription_prompt:  # ここでグローバル変数を参照
         logging.error("プロンプトが空です。音声ファイルの処理を中止します。")
+        processing_done = True  # 経過時間の更新を停止
         root.after(0, lambda: messagebox.showerror("エラー", "プロンプトが空です。処理を中止します。"))
         return  # 処理を中止
 
